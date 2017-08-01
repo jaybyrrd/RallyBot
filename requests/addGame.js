@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:36:58 2017 Gaëtan Léandre
-// Last update Tue Aug  1 12:18:38 2017 Gaëtan Léandre
+// Last update Tue Aug  1 13:50:45 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -43,7 +43,6 @@ exports.addGame = function(facebookId, name, lat, long, diam, callback)
                         else
                             callback(500, { 'response': 'Internal error', 'res': false});
                     });
-                });
             }
             else
                 callback(403, {'response':"Connection denied",'res':false});
