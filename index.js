@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 01:34:33 2017 Gaëtan Léandre
-// Last update Tue Aug  1 01:35:37 2017 Gaëtan Léandre
+// Last update Tue Aug  1 04:08:29 2017 Gaëtan Léandre
 //
 
 var express = require('express');
@@ -14,6 +14,7 @@ var app = express();
 var port = process.env.PORT || 8081;
 var mongoose = require('mongoose');
 var server = require('http').Server(app);
+global.facebookKey = "EAAQQYHZBDuagBAIKZAuvZAauogrCTG7yFSUXt4yMHecjyj0GF4SWad22NjqJUPZAaZAWm0lPTxIEt4XhAZCG9bfP4CEfGO3AxxUKazrybKDDSrYMVMEqZASuJMrb1igJnfH7ZACdh4NyuAYJ71L1bygKycf5xDBxKx27TO6B1qTBxRil0TdWWDZCh";
 
 // Configuration
 app.use(express.static(__dirname + './'));
@@ -34,6 +35,8 @@ app.use(function (req, res, next) {
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/rallybot');
+
+require('./roads/userRoad.js')(app);
 
 server.listen(port);
 
