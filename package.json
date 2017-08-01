@@ -2,8 +2,11 @@
   "name": "RallyBot",
   "version": "0.0.1",
   "dependencies": {
+    "Q": "0.0.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mongoose": "^4.11.5"
+    "mongoose": "^4.11.5",
+    "q": "^1.5.0",
+    "querystring": "^0.2.0"
   }
 }
