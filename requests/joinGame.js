@@ -5,22 +5,23 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:22:14 2017 Gaëtan Léandre
-// Last update Tue Aug  1 08:16:08 2017 Gaëtan Léandre
+// Last update Tue Aug  1 12:14:05 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
 var game = require('../schemas/game.js');
 var gameParticipant = require('../schemas/gameParticipant.js');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.joinGame = function(facebookId, gameId, callback)
 {
     if (facebookId != undefined && gameId != undefined)
     {
-        game.find({'name': gameId}, function(err, games)
+        game.find({'_id': ObjectId(gameId)}, function(err, games)
         {
             if (games.length > 0)
             {
-                user.find({'name': gameId}, function(err, users)
+                user.find({'facebookId': facebookId}, function(err, users)
                 {
                     if (users.length > 0)
                     {
