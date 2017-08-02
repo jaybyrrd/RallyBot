@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 01:34:33 2017 Gaëtan Léandre
-// Last update Tue Aug  1 01:35:37 2017 Gaëtan Léandre
+// Last update Tue Aug  1 07:10:02 2017 Gaëtan Léandre
 //
 
 var express = require('express');
@@ -34,6 +34,9 @@ app.use(function (req, res, next) {
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/rallybot');
+
+require('./roads/userRoad.js')(app);
+require('./roads/gameRoad.js')(app);
 
 server.listen(port);
 
