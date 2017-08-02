@@ -36,10 +36,13 @@ module.exports = function(app) {
     });
 
     app.post('/addgame', function(req, res) {
-        var facebookId = req.body.facebookId;
-        var gameId = req.body.gameId;
+        var facebookId = req.body['messenger user id'];
+        var gameId = req.body.gameName;
+	var lat = req.body.latitude;
+	var lon = req.body.longitude;
+	var diam = req.body.diam;
 
-        addGame.addGame(facebookId, gameId, function(value, found, token) {
+        addGame.addGame(facebookId, gameId, lat, lon, diam, function(value, found, token) {
             res.status(value);
             res.json(found);
         });

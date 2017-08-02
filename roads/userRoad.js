@@ -14,8 +14,7 @@ var ping = require('../requests/ping.js');
 module.exports = function(app) {
 
     app.post('/adduser', function(req, res) {
-        var facebookId = req.body.facebookId;
-
+        var facebookId = req.body['messenger user id'];
         addUser.addUser(facebookId, function(value, found, token) {
             res.status(value);
             res.json(found);
