@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 08:14:52 2017 Gaëtan Léandre
-// Last update Tue Aug  1 08:24:27 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:15:02 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -24,8 +24,8 @@ exports.swipe = function(facebookId, yelpId, swipe, callback)
                 {
                     if (cards.length > 0)
                     {
-                        vote.findOneAndUpdate({'user': peoples[0]._id, 'card': cards[0]._id}, {$set:{'choice':swipe}}, {new: true}, function(err, cards){
-                            if(err)
+                        vote.findOneAndUpdate({'user': peoples[0]._id, 'card': cards[0]._id}, {$set:{'choice':swipe, 'user': peoples[0]._id, 'card': cards[0]._id}}, {upsert: true, new: true}, function(err, cards){
+                            if(!err)
                                 callback(200, { 'response': 'Ok', 'id': facebookId, 'res': true});
                             else
                                 callback(500, { 'response': 'Internal error', 'res': false});

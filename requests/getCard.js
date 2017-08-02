@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Wed Aug  2 03:38:28 2017 Gaëtan Léandre
+// Last update Wed Aug  2 06:52:20 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -33,13 +33,43 @@ exports.getCard = function(facebookId, gameId, callback)
                             if (partic.length > 0)
                             {
                                 vote.find({'user': peoples[0]._id}, function(err,votes) {
-                                    var done = votes.map(function(el) { return el.card._id } );
+                                    var done = votes.map(function(el) { return el.card } );
                                     card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
                                         if (cards.length > 0)
                                         {
-					    console.log(cards[0]);
                                             yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
                                             {
+                                                var elements = [];
+                                                var i = 0;
+                                                var buttons = [];
+                                                buttons.push({
+                                                    "type": "show_block",
+                                                    "block_name": "acceptCard",
+                                                    "title": "Love it!"
+                                                });
+                                                buttons.push({
+                                                    "type":"show_block",
+                                                    "block_name":"refuseCard",
+                                                    "title":"Please NO!"
+                                                });
+                                                if (resto.url)
+                                                {
+                                                    buttons.push({
+                                                        "type":"web_url",
+                                                        "url":resto.url,
+                                                        "title":"Visite website"
+                                                    });
+                                                }
+                                                while (resto.photos && i < resto.photos.length)
+                                                {
+                                                    elements.push({
+                                                                    "title": resto.name,
+                                                                    "image_url": resto.photos[i],
+                                                                    "subtitle": resto.price + ' ' + resto.rating,
+                                                                    "buttons":buttons
+                                                                });
+                                                    i++;
+                                                }
                                                 callback(200, {
                                                     "messages": [
                                                         {
@@ -47,25 +77,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                                                 "type":"template",
                                                                 "payload":{
                                                                     "template_type":"generic",
-                                                                    "elements":[
-                                                                        {
-                                                                            "title": resto.name,
-                                                                            "image_url": resto.image_url,
-                                                                            "subtitle": resto.price + ' ' + resto.rating,
-                                                                            "buttons":[
-                                                                                {
-                                                                                    "type":"web_url",
-                                                                                    "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
-                                                                                    "title":"View Item"
-                                                                                },
-                                                                                {
-                                                                                    "type":"web_url",
-                                                                                    "url":"https://petersapparel.parseapp.com/buy_item?item_id=100",
-                                                                                    "title":"Buy Item"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
+                                                                    "elements": elements
                                                                 }
                                                             }
                                                         }
@@ -75,13 +87,13 @@ exports.getCard = function(facebookId, gameId, callback)
                                                     }
                                                 });
                                             }).fail(function() {
-                                                callback(404, {set_attributes: {cb_yelpId: '-1'}});
+                                                callback(200, {set_attributes: {cb_yelpId: '-1'}});
                                             });
                                         }
                                         else
                                         {
-                                            callback(404, {set_attributes: {cb_yelpId: '-1'}});
-					    return;
+                                            callback(200, {set_attributes: {cb_yelpId: '-1'}});
+					                        return;
                                             //NO OLD CARDS -> add some?
                                         }
                                     });
