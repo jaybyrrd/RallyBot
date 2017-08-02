@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Wed Aug  2 06:52:20 2017 Gaëtan Léandre
+// Last update Wed Aug  2 16:36:52 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -13,6 +13,7 @@ var user = require('../schemas/user.js');
 var card = require('../schemas/card.js');
 var vote = require('../schemas/vote.js');
 var gameParticipant = require('../schemas/gameParticipant.js');
+var cardGame = require('../schemas/cardGame.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 var yelpManager = require('../managers/yelpManager.js');
 
@@ -34,10 +35,10 @@ exports.getCard = function(facebookId, gameId, callback)
                             {
                                 vote.find({'user': peoples[0]._id}, function(err,votes) {
                                     var done = votes.map(function(el) { return el.card } );
-                                    card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
+                                    cardGame.find({'card' :{ $in : games[0].cards}, 'card' : {$nin : done}, 'game' : games[0]._id}).populate('card').exec(function(err, cards) {
                                         if (cards.length > 0)
                                         {
-                                            yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
+                                            yelpManager.getInfoYelp(cards[0].card.yelpId).then(function(resto)
                                             {
                                                 var elements = [];
                                                 var i = 0;
