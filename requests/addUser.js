@@ -15,11 +15,11 @@ exports.addUser = function(facebookId, callback)
     if (facebookId != undefined)
     {
         user.find({'facebookId': facebookId}, function(err, peoples)
-        {
+	{
             if (peoples.length == 0)
             {
                 var newUser = user({
-                    'facebookId': String,
+                    'facebookId': facebookId,
                     'creationDate' : new Date()
                 });
                 newUser.save(function(err, result) {

@@ -35,7 +35,7 @@ exports.addGame = function(facebookId, name, lat, long, diam, callback)
                             });
                             newGamePart.save();
                             yelpManager.addCards(lat, long, diam, result).then(function(text){
-                                callback(200, { 'response': 'Ok', 'id': resukt._id, 'res': true});
+                                callback(200, { 'set_attributes': {'cb_recommendation_1':result._id}});
                             }).fail(function(){
                                 callback(500, { 'response': 'Internal error', 'res': false});
                             });
