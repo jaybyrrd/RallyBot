@@ -80,6 +80,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                         else
                                         {
                                             callback(404, {set_attributes: {cb_yelpId: '-1'}});
+					    return;
                                             //NO OLD CARDS -> add some?
                                         }
                                     });
