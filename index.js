@@ -33,7 +33,8 @@ app.use(function (req, res, next) {
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/rallybot');
+// mongoose.connect('mongodb://localhost:27017/rallybot');
+mongoose.connect(process.env.MONGODB_URI);
 
 require('./roads/userRoad.js')(app);
 require('./roads/gameRoad.js')(app);
