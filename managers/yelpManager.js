@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 03:29:20 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:40:06 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -19,6 +19,7 @@ var getJSON = function(options, onResult)
     var prot = https;
     var req = prot.request(options, function(res)
     {
+        console.log(options);
         var output = '';
         console.log(options.host + ':' + res.statusCode);
         res.setEncoding('utf8');
