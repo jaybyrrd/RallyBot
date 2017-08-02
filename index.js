@@ -37,6 +37,7 @@ mongoose.connect('mongodb://localhost:27017/rallybot');
 
 require('./roads/userRoad.js')(app);
 require('./roads/gameRoad.js')(app);
+require('./roads/chatFuel.js')(app);
 
 server.listen(port);
 
