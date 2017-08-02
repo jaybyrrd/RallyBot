@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 07:19:13 2017 Gaëtan Léandre
+// Last update Wed Aug  2 07:20:41 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -208,12 +208,23 @@ exports.addCards = function(lat, long, diam, gameRecv)
                     if (!isin(cards._id, table))
                     {
                         table.push(cards._id);
-                        game.findOneAndUpdate({_id : gameRecv._id}, {$push: {cards: cards._id}});
                     }
                 });
                 i++;
             }
-            deferred.resolve("ok");
+            if (result.total != 0)
+            {
+                game.findOneAndUpdate({_id : gameRecv._id}, {$set: {cards: table}}, function(err, res){
+                    if (!err)
+                        deferred.resolve("ok");
+                    else
+                        deferred.reject();
+                });
+
+            }
+            else{
+                deferred.resolve("ok");
+            }
         }
         else
             deferred.reject();
