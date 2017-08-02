@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Tue Aug  1 12:00:43 2017 Gaëtan Léandre
+// Last update Wed Aug  2 03:38:28 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -14,6 +14,7 @@ var card = require('../schemas/card.js');
 var vote = require('../schemas/vote.js');
 var gameParticipant = require('../schemas/gameParticipant.js');
 var ObjectId = require('mongoose').Types.ObjectId;
+var yelpManager = require('../managers/yelpManager.js');
 
 exports.getCard = function(facebookId, gameId, callback)
 {
@@ -36,11 +37,49 @@ exports.getCard = function(facebookId, gameId, callback)
                                     card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
                                         if (cards.length > 0)
                                         {
-                                            callback(200, {'response':"Ok", 'name': cards[0].name, 'yelpId': cards[0].yelpId, 'res':true});
+                                            yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
+                                            {
+                                                callback(200, {
+                                                    "messages": [
+                                                        {
+                                                            "attachment":{
+                                                                "type":"template",
+                                                                "payload":{
+                                                                    "template_type":"generic",
+                                                                    "elements":[
+                                                                        {
+                                                                            "title": resto.name,
+                                                                            "image_url": resto.image_url,
+                                                                            "subtitle": resto.price + ' ' + resto.rating,
+                                                                            "buttons":[
+                                                                                {
+                                                                                    "type":"web_url",
+                                                                                    "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
+                                                                                    "title":"View Item"
+                                                                                },
+                                                                                {
+                                                                                    "type":"web_url",
+                                                                                    "url":"https://petersapparel.parseapp.com/buy_item?item_id=100",
+                                                                                    "title":"Buy Item"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    set_attributes: {
+                                                        cb_yelpId: resto.id
+                                                    }
+                                                });
+                                            }).fail(function() {
+                                                callback(404, {set_attributes: {cb_yelpId: '-1'}});
+                                            });
                                         }
                                         else
                                         {
-                                            callback(404, {'response':"No more cards",'res':false});
+                                            callback(404, {set_attributes: {cb_yelpId: '-1'}});
                                             //NO OLD CARDS -> add some?
                                         }
                                     });
