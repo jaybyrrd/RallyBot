@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:33:28 2017 Gaëtan Léandre
-// Last update Tue Aug  1 13:48:24 2017 Gaëtan Léandre
+// Last update Wed Aug  2 04:55:54 2017 Gaëtan Léandre
 //
 
 var joinGame = require('../requests/joinGame.js');
@@ -29,9 +29,7 @@ module.exports = function(app) {
         var facebookId = req.body['messenger user id'];
         var gameId = req.body.gameId;
 
-	console.log("one");
         getCard.getCard(facebookId, gameId, function(value, found, token) {
-	    console.log(found);
             res.status(value);
             res.json(found);
         });
@@ -51,7 +49,7 @@ module.exports = function(app) {
     });
 
     app.post('/joingame', function(req, res) {
-        var facebookId = req.body.facebookId;
+        var facebookId = req.body['messenger user id'];
         var gameId = req.body.gameId;
 
         joinGame.joinGame(facebookId, gameId, function(value, found, token) {
@@ -61,10 +59,11 @@ module.exports = function(app) {
     });
 
     app.post('/swipe', function(req, res) {
-        var facebookId = req.body.facebookId;
+        var facebookId = req.body['messenger user id'];
         var yelpId = req.body.yelpId;
+        var vote = req.body.vote;
 
-        swipe.swipe(facebookId, yelpId, function(value, found, token) {
+        swipe.swipe(facebookId, yelpId, vote, function(value, found, token) {
             res.status(value);
             res.json(found);
         });
