@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Wed Aug  2 05:16:25 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:17:32 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -35,7 +35,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                 vote.find({'user': peoples[0]._id}, function(err,votes) {
                                     var done = votes.map(function(el) { return el.card._id } );
                                     card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
-                                        console.log(vote.length);
+                                        console.log(votes.length);
                                         if (cards.length > 0)
                                         {
                                             yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
