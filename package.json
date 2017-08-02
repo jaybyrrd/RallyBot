@@ -1,6 +1,9 @@
 {
   "name": "RallyBot",
   "version": "0.0.1",
+  "scripts": {
+    "start": "node ./index.js"
+  },
   "dependencies": {
     "Q": "0.0.1",
     "body-parser": "^1.17.2",
