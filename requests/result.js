@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 06:48:49 2017 Gaëtan Léandre
+// Last update Wed Aug  2 06:52:57 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -17,7 +17,7 @@ function compareNombres(a, b) {
   return b.percent - a.percent;
 }
 
-exports.result = function(facebookId, gameId, callback)
+exports.getResult = function(facebookId, gameId, callback)
 {
     if (facebookId != undefined && gameId != undefined)
     {
