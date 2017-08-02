@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:33:28 2017 Gaëtan Léandre
-// Last update Wed Aug  2 04:59:44 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:01:10 2017 Gaëtan Léandre
 //
 
 var joinGame = require('../requests/joinGame.js');
@@ -66,7 +66,7 @@ module.exports = function(app) {
         swipe.swipe(facebookId, yelpId, vote, function(value, found, token) {
             res.status(value);
             res.json(found);
-            console.log(result);
+            console.log(value);
         });
     });
 };
