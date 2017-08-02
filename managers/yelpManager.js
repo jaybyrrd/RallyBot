@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 05:40:06 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:41:27 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -59,7 +59,7 @@ exports.getInfoYelp = function(yelpId)
     var options = {
         host: 'api.yelp.com',
         port: 443,
-        path: '/v3/businesses/' + yelpId,
+        path: '/v3/businesses/' + 'le-petit-marche-atlanta-2',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
