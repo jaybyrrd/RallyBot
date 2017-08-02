@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:05:55 2017 Gaëtan Léandre
-// Last update Tue Aug  1 04:18:25 2017 Gaëtan Léandre
+// Last update Wed Aug  2 00:34:07 2017 Gaëtan Léandre
 //
 
 var addUser = require('../requests/addUser.js');
@@ -15,7 +15,7 @@ module.exports = function(app) {
 
     app.post('/adduser', function(req, res) {
         var facebookId = req.body.facebookId;
-
+        console.log(req.body);
         addUser.addUser(facebookId, function(value, found, token) {
             res.status(value);
             res.json(found);
