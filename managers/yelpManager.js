@@ -105,7 +105,7 @@ exports.addCards = function(lat, long, diam, gameRecv)
             var i = 0;
             while (i < result.total && result.businesses[i])
             {
-                card.findOneAndUpdate({yelpId: result.businesses[i]._id}, {$set:{name: result.businesses[i].name}}, {upsert: true, new: true}, function(err, cards){
+                card.findOneAndUpdate({yelpId: result.businesses[i].id}, {$set:{name: result.businesses[i].name, yelpId: result.businesses[i].id}}, {upsert: true, new: true}, function(err, cards){
                     if(err){
                         deferred.reject();
                         return deferred.promise;

@@ -37,6 +37,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                     card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
                                         if (cards.length > 0)
                                         {
+					    console.log(cards[0]);
                                             yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
                                             {
                                                 callback(200, {
