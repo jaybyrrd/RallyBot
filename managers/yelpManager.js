@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Tue Aug  1 07:04:32 2017 Gaëtan Léandre
+// Last update Wed Aug  2 03:29:20 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -51,6 +51,29 @@ function isin(n,a){
   return false;
 }
 
+exports.getInfoYelp = function(yelpId)
+{
+    var deferred = Q.defer();
+
+    var options = {
+        host: 'api.yelp.com',
+        port: 443,
+        path: '/v3/businesses/' + yelpId,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer NwpIesOSItgB0k_RPrZ34wmnzzj4UXx3f87AqFmJmMjZXgd5nNpDOgOPyzjg4BhfZzcRwdNhvB0h3GpdScrpW197_sPsKwxwib2JV_5zuZH9-s9Ns94zikUZkFqAWXYx'
+        }
+    };
+    getJSON(options, function(statusCode, result) {
+        if (statusCode == 200)
+            deferred.resolve(result);
+        else
+            deferred.reject();
+    });
+    return deferred.promise;
+}
+
 exports.addCards = function(lat, long, diam, gameRecv)
 {
     var deferred = Q.defer();
@@ -82,7 +105,7 @@ exports.addCards = function(lat, long, diam, gameRecv)
             var i = 0;
             while (i < result.total && result.businesses[i])
             {
-                card.findOneAndUpdate({yelpId: result.businesses[i]._id}, {$set:{name: result.businesses[i].name}}, {upsert: true, new: true}, function(err, cards){
+                card.findOneAndUpdate({yelpId: result.businesses[i].id}, {$set:{name: result.businesses[i].name, yelpId: result.businesses[i].id}}, {upsert: true, new: true}, function(err, cards){
                     if(err){
                         deferred.reject();
                         return deferred.promise;

@@ -26,10 +26,12 @@ module.exports = function(app) {
     });
 
     app.post('/getCard', function(req, res) {
-        var facebookId = req.body.facebookId;
+        var facebookId = req.body['messenger user id'];
         var gameId = req.body.gameId;
 
+	console.log("one");
         getCard.getCard(facebookId, gameId, function(value, found, token) {
+	    console.log(found);
             res.status(value);
             res.json(found);
         });
