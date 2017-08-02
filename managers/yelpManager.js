@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 07:14:02 2017 Gaëtan Léandre
+// Last update Wed Aug  2 07:16:10 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -138,15 +138,12 @@ var getJSON = function(options, onResult)
 };
 
 function isin(n,a){
-    console.log('=====');
-    console.log(n);
-  for (var i=0;i<a.length;i++){
-     console.log(a[i]);
-    if (a[i]== n){
-        return true;
+    for (var i=0;i<a.length;i++){
+        if (a[i]== n){
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
 exports.getInfoYelp = function(yelpId)
@@ -176,7 +173,7 @@ exports.addCards = function(lat, long, diam, gameRecv)
 {
     var deferred = Q.defer();
     var getParams = {};
-    var table;
+    var table = [];
 
     table = gameRecv.cards;
     getParams.sort_by = 'review_count';
@@ -209,7 +206,10 @@ exports.addCards = function(lat, long, diam, gameRecv)
                         return deferred.promise;
                     }
                     if (!isin(cards._id, table))
+                    {
                         table.push(cards._id);
+                        console.log('lol');
+                    }
                 });
                 i++;
             }
