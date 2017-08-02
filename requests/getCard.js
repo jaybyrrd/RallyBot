@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Wed Aug  2 05:33:52 2017 Gaëtan Léandre
+// Last update Wed Aug  2 05:45:56 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -40,42 +40,25 @@ exports.getCard = function(facebookId, gameId, callback)
                                             yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
                                             {
                                                 var elements = [];
-                                                elements.push({
-                                                                "title": resto.name,
-                                                                "image_url": resto.image_url,
-                                                                "subtitle": resto.price + ' ' + resto.rating,
-                                                                "buttons":[
-                                                                        {
-                                                                            "type": "show_block",
-                                                                            "block_name": "acceptCard",
-                                                                            "title": "Love it!"
-                                                                        },
-                                                                        {
-                                                                            "type":"show_block",
-                                                                            "block_name":"refuseCard",
-                                                                            "title":"Please NO!"
-                                                                        }
-                                                                ]
-                                                            });
                                                 var i = 0;
+                                                var buttons = [];
+                                                buttons.push({
+                                                    "type": "show_block",
+                                                    "block_name": "acceptCard",
+                                                    "title": "Love it!"
+                                                });
+                                                buttons.push({
+                                                    "type":"show_block",
+                                                    "block_name":"refuseCard",
+                                                    "title":"Please NO!"
+                                                });
                                                 while (resto.photos && i < resto.photos.length)
                                                 {
                                                     elements.push({
                                                                     "title": resto.name,
                                                                     "image_url": resto.photos[i],
                                                                     "subtitle": resto.price + ' ' + resto.rating,
-                                                                    "buttons":[
-                                                                            {
-                                                                                "type": "show_block",
-                                                                                "block_name": "acceptCard",
-                                                                                "title": "Love it!"
-                                                                            },
-                                                                            {
-                                                                                "type":"show_block",
-                                                                                "block_name":"refuseCard",
-                                                                                "title":"Please NO!"
-                                                                            }
-                                                                    ]
+                                                                    "buttons":buttons
                                                                 });
                                                     i++;
                                                 }
