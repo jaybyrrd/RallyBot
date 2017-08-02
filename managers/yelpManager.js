@@ -102,6 +102,9 @@ exports.addCards = function(lat, long, diam, gameRecv)
                 });
 
             }
+            else{
+                deferred.resolve("ok");
+            }
         }
         else
             deferred.reject();
