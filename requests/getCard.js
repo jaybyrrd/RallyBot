@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Wed Aug  2 03:38:28 2017 Gaëtan Léandre
+// Last update Wed Aug  2 04:52:24 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -37,7 +37,6 @@ exports.getCard = function(facebookId, gameId, callback)
                                     card.find({'_id' :{ $in : games[0].cards}, '_id' : {$nin : done}}, function(err, cards) {
                                         if (cards.length > 0)
                                         {
-					    console.log(cards[0]);
                                             yelpManager.getInfoYelp(cards[0].yelpId).then(function(resto)
                                             {
                                                 callback(200, {
@@ -54,14 +53,14 @@ exports.getCard = function(facebookId, gameId, callback)
                                                                             "subtitle": resto.price + ' ' + resto.rating,
                                                                             "buttons":[
                                                                                 {
-                                                                                    "type":"web_url",
-                                                                                    "url":"https://petersapparel.parseapp.com/view_item?item_id=100",
-                                                                                    "title":"View Item"
+                                                                                    "type": "show_block",
+                                                                                    "block_name": "acceptCard",
+                                                                                    "title": "Love it!"
                                                                                 },
                                                                                 {
-                                                                                    "type":"web_url",
-                                                                                    "url":"https://petersapparel.parseapp.com/buy_item?item_id=100",
-                                                                                    "title":"Buy Item"
+                                                                                    "type":"show_block",
+                                                                                    "block_name":"refuseCard",
+                                                                                    "title":"Please NO!"
                                                                                 }
                                                                             ]
                                                                         }
