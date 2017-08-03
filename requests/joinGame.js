@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:22:14 2017 Gaëtan Léandre
-// Last update Tue Aug  1 12:14:05 2017 Gaëtan Léandre
+// Last update Thu Aug  3 01:08:32 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');

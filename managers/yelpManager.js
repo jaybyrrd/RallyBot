@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 18:17:42 2017 Gaëtan Léandre
+// Last update Thu Aug  3 01:40:10 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -252,7 +252,7 @@ exports.addCards = function (lat, long, diam, gameRecv) {
     getParams.sort_by = 'review_count';
     if (diam)
         getParams.radius = diam;
-    getParams.limit = 25;
+    getParams.limit = 5;
     if (lat)
         getParams.latitude = lat;
     if (long)
