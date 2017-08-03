@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Thu Aug  3 04:06:28 2017 Gaëtan Léandre
+// Last update Thu Aug  3 04:12:18 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -80,7 +80,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements[cardNumber] = {
                                                         "title": resto.name,
                                                         "image_url": resto.photos[0],
-                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends want to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":resto.url,
@@ -96,7 +96,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements[cardNumber] = {
                                                         "title": cardsScore[cardNumber].name,
                                                         "image_url": '',
-                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends want to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":'https://www.yelp.fr/biz/' + cardsScore[cardNumber].yelpId,
