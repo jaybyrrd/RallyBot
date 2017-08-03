@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 06:03:36 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:43:28 2017 Gaëtan Léandre
+// Last update Thu Aug  3 01:38:32 2017 Gaëtan Léandre
 //
 
 var https = require("https");
@@ -272,6 +272,7 @@ exports.addCards = function (lat, long, diam, gameRecv) {
             var i = 0;
             while (i < result.total && result.businesses[i]) {
                 updateBusiness(result.businesses[i].id, result.businesses[i].name, gameRecv);
+                console.log("aa");
                 i++;
             }
             deferred.resolve("ok");
