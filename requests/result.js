@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 20:17:14 2017 Gaëtan Léandre
+// Last update Wed Aug  2 20:18:50 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -35,7 +35,6 @@ exports.getResult = function(facebookId, gameId, callback)
                             var cardsScore = [];
                             for (var i = 0; i < cardGames.length;i++)
                             {
-                                console.log('card');
                                 vote.find({'card': cardGames[i].card}, function(err, votes){
                                     if (votes)
                                     {
@@ -60,9 +59,9 @@ exports.getResult = function(facebookId, gameId, callback)
                             }
                             cardsScore.sort(compareNombres);
                             var elements = [];
-                            for (var i = 0; i < 5 && i < cardsScore.length;i++)
+                            for (var j = 0; j < 5 && j < cardsScore.length;j++)
                             {
-                                yelpManager.getInfoYelp(cardsScore.yelpId).then(function(resto)
+                                yelpManager.getInfoYelp(cardsScore[j].yelpId).then(function(resto)
                                 {
                                     console.log("hiii");
                                     elements.push({
