@@ -16,7 +16,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.swipe = function(facebookId, yelpId, gameId, swipe, callback)
 {
-    if (facebookId != undefined)
+    if (facebookId != undefined && facebookId.length)
     {
         user.find({'facebookId': facebookId}, function(err, peoples)
         {

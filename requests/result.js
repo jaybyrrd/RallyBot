@@ -21,7 +21,9 @@ function compareNombres(a, b) {
 
 exports.getResult = function(facebookId, gameId, callback)
 {
-    if (facebookId != undefined && gameId != undefined)
+    console.log('facebookId', facebookId);
+    console.log('gameId', gameId);
+    if (facebookId != undefined && facebookId.length && gameId != undefined && gameId.length)
     {
         user.find({'facebookId': facebookId}, function(err, peoples)
 	    {

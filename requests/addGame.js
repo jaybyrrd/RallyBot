@@ -15,7 +15,7 @@ var yelpManager = require('../managers/yelpManager.js');
 
 exports.addGame = function(facebookId, name, lat, long, diam, callback)
 {
-    if (facebookId != undefined && name != undefined)
+    if (facebookId != undefined && facebookId.length && gameId != undefined && gameId.length)
     {
         user.find({'facebookId': facebookId}, function(err, peoples)
         {

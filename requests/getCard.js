@@ -19,7 +19,7 @@ var yelpManager = require('../managers/yelpManager.js');
 
 exports.getCard = function(facebookId, gameId, callback)
 {
-    if (facebookId != undefined && gameId != undefined)
+    if (facebookId != undefined && facebookId.length && gameId != undefined && gameId.length)
     {
         user.find({'facebookId': facebookId}, function(err, peoples)
         {
