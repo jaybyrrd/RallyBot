@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 20:28:34 2017 Gaëtan Léandre
+// Last update Wed Aug  2 20:29:25 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -35,6 +35,7 @@ exports.getResult = function(facebookId, gameId, callback)
                             var cardsScore = [];
                             for (var i = 0; i < cardGames.length;i++)
                             {
+                                console.log(i);
                                 vote.find({'card': cardGames[i].card}, function(err, votes){
                                     if (votes)
                                     {
