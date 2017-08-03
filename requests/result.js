@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:39:28 2017 Gaëtan Léandre
+// Last update Wed Aug  2 21:42:00 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -16,10 +16,7 @@ var yelpManager = require('../managers/yelpManager.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 function compareNombres(a, b) {
-    if (b.percent == a.percent)
-        return ((b.up + b.down) + (a.up + a.down));
-    else
-        return a.percent - b.percent;
+    return b.percent - a.percent;
 }
 
 exports.getResult = function(facebookId, gameId, callback)
@@ -128,7 +125,6 @@ exports.getResult = function(facebookId, gameId, callback)
                                 }
                             }
                             function sendAnser(elements2) {
-                                console.log(elements2);
                                 callback(200, {
                                     "messages": [
                                         {
