@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:57:33 2017 Gaëtan Léandre
+// Last update Wed Aug  2 21:59:53 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -99,7 +99,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                     yelpManager.getInfoYelp(cardsScore[cardNumber].yelpId).then(function(resto)
                                     {
                                         console.log(cardsScore[cardNumber]);
-                                        elements.push({
+                                        elements[cardNumber] = {
                                                         "title": resto.name,
                                                         "image_url": resto.photos[0],
                                                         "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent + '% of your friends whant to go to this place.',
@@ -108,13 +108,11 @@ exports.getResult = function(facebookId, gameId, callback)
                                                             "url":resto.url,
                                                             "title":"Visite website"
                                                         }]
-                                                    });
+                                                    };
                                         console.log(elements);
                                         counter++;
                                         if (counter >= 5 || counter >= cardsScore.length)
                                         {
-                                            counter = 5;
-                                            elements.sort(compareNombres);
                                             sendAnser(elements);
                                         }
                                     }).fail(function(){
@@ -122,7 +120,6 @@ exports.getResult = function(facebookId, gameId, callback)
                                         if (counter >= 5 || counter >= cardsScore.length)
                                         {
                                             counter = 5;
-                                            elements.sort(compareNombres);
                                             sendAnser(elements);
                                         }
                                     });
