@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 22:01:00 2017 Gaëtan Léandre
+// Last update Thu Aug  3 02:08:47 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -101,7 +101,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements[cardNumber] = {
                                                         "title": resto.name,
                                                         "image_url": resto.photos[0],
-                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent + '% of your friends whant to go to this place.',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":resto.url,
@@ -114,6 +114,16 @@ exports.getResult = function(facebookId, gameId, callback)
                                             sendAnser(elements);
                                         }
                                     }).fail(function(){
+                                        elements[cardNumber] = {
+                                                        "title": cardsScore[cardNumber].name,
+                                                        "image_url": '',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
+                                                        "buttons": [{
+                                                            "type":"web_url",
+                                                            "url":'https://www.yelp.fr/biz/' + cardsScore[cardNumber].yelpId,
+                                                            "title":"Visite website"
+                                                        }]
+                                                    };
                                         counter++;
                                         if (counter >= 5 || counter >= cardsScore.length)
                                         {

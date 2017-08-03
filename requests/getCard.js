@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Thu Aug  3 01:58:55 2017 Gaëtan Léandre
+// Last update Thu Aug  3 02:05:26 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -92,9 +92,46 @@ exports.getCard = function(facebookId, gameId, callback)
                                                             }
                                                         });
                                                     }).fail(function() {
-                                                        console.log("FAIL===============================================");
-                                                        console.log(cards[pos].card.yelpId);
-                                                        yelpCall(pos + 1);
+                                                        var elements = [];
+                                                        var i = 0;
+                                                        var buttons = [];
+                                                        buttons.push({
+                                                            "type": "show_block",
+                                                            "block_name": "acceptCard",
+                                                            "title": "Love it!"
+                                                        });
+                                                        buttons.push({
+                                                            "type":"show_block",
+                                                            "block_name":"refuseCard",
+                                                            "title":"Please NO!"
+                                                        });
+                                                        buttons.push({
+                                                            "type":"web_url",
+                                                            "url": 'https://www.yelp.fr/biz/' + cards[pos].yelpId,
+                                                            "title":"Visite website"
+                                                        });
+                                                        elements.push({
+                                                                        "title": cards[pos].name,
+                                                                        "image_url": '?',
+                                                                        "subtitle": 'Price : ? / Rating : ?/5',
+                                                                        "buttons":buttons
+                                                                    });
+                                                        callback(200, {
+                                                            "messages": [
+                                                                {
+                                                                    "attachment":{
+                                                                        "type":"template",
+                                                                        "payload":{
+                                                                            "template_type":"generic",
+                                                                            "elements": elements
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            set_attributes: {
+                                                                cb_yelpId: resto.id
+                                                            }
+                                                        });
                                                     });
                                                 }
                                                 else {
