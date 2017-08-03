@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:10:07 2017 Gaëtan Léandre
+// Last update Wed Aug  2 21:13:27 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -111,16 +111,16 @@ exports.getResult = function(facebookId, gameId, callback)
                                         console.log(elements);
                                         counter++;
                                         if (counter >= 5 || counter >= cardsScore.length)
-                                            sendAnser();
+                                            sendAnser(elements);
                                     }).fail(function(){
                                         counter++;
                                         if (counter >= 5 || counter >= cardsScore.length)
-                                            sendAnser();
+                                            sendAnser(elements);
                                     });
                                 }
                             }
-                            function sendAnser() {
-                                console.log(elements);
+                            function sendAnser(elements2) {
+                                console.log(elements2);
                                 callback(200, {
                                     "messages": [
                                         {
@@ -128,7 +128,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                                 "type":"template",
                                                 "payload":{
                                                     "template_type":"generic",
-                                                    "elements": elements
+                                                    "elements": elements2
                                                 }
                                             }
                                         }
