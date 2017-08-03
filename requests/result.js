@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 20:36:31 2017 Gaëtan Léandre
+// Last update Wed Aug  2 20:47:37 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -33,13 +33,9 @@ exports.getResult = function(facebookId, gameId, callback)
                     {
                         cardGame.find({'game': ObjectId(gameId)}).populate('card').exec(function(err, cardGames){
                             var cardsScore = [];
-                            for (var i = 0; i < cardGames.length;i++)
-                            {
-                                console.log(i);
-                                console.log(cardGames[i].card);
-                                vote.find({'card': cardGames[i].card}, function(err, votes){
-                                    console.log("====");
-                                    console.log(i);
+
+                            function findCards(cardNum){
+                                vote.find({'card': cardGames[cardNum].card}, function(err, votes){
                                     if (votes)
                                     {
                                         var up = 0;
@@ -52,46 +48,78 @@ exports.getResult = function(facebookId, gameId, callback)
                                                 up++;
                                         }
                                         cardsScore.push({
-                                            'name': cardGames[i].card.name,
-                                            'yelpId': cardGames[i].card.yelpId,
+                                            'name': cardGames[cardNum].card.name,
+                                            'yelpId': cardGames[cardNum].card.yelpId,
                                             'up': up,
                                             'down': down,
                                             'percent': (up / (up + down) * 100.0)
                                         });
                                     }
+
+                                    counter = counter + 1;
+                                    if(counter >= cardGames.length){
+                                        finish();
+                                    }
                                 });
                             }
-                            cardsScore.sort(compareNombres);
-                            var elements = [];
-                            for (var j = 0; j < 5 && j < cardsScore.length;j++)
+                            for (var i = 0; i < cardGames.length;i++)
                             {
-                                yelpManager.getInfoYelp(cardsScore[j].yelpId).then(function(resto)
-                                {
-                                    elements.push({
-                                                    "title": resto.name,
-                                                    "image_url": resto.photos[0],
-                                                    "subtitle": cardsScore.up + '/' + (cardsScore.up + cardsScore.down) + ' ' + cardsScore.percent + '%',
-                                                    "buttons": [{
-                                                        "type":"web_url",
-                                                        "url":resto.url,
-                                                        "title":"Visite website"
-                                                    }]
-                                                });
-                                });
+                                findCards(i);
+                                // vote.find({'card': cardGames[i].card}, function(err, votes){
+                                //     if (votes)
+                                //     {
+                                //         var up = 0;
+                                //         var down = 0;
+                                //         for (var j = 0; j < votes.length ; j++)
+                                //         {
+                                //             if (votes[j].choice == 0)
+                                //                 down++;
+                                //             else if (votes[j].choice == 1)
+                                //                 up++;
+                                //         }
+                                //         cardsScore.push({
+                                //             'name': cardGames[i].card.name,
+                                //             'yelpId': cardGames[i].card.yelpId,
+                                //             'up': up,
+                                //             'down': down,
+                                //             'percent': (up / (up + down) * 100.0)
+                                //         });
+                                //     }
+                                // });
                             }
-                            callback(200, {
-                                "messages": [
+                            function finish(){
+                                cardsScore.sort(compareNombres);
+                                var elements = [];
+                                for (var j = 0; j < 5 && j < cardsScore.length;j++)
+                                {
+                                    yelpManager.getInfoYelp(cardsScore[j].yelpId).then(function(resto)
                                     {
-                                        "attachment":{
-                                            "type":"template",
-                                            "payload":{
-                                                "template_type":"generic",
-                                                "elements": elements
+                                        elements.push({
+                                                        "title": resto.name,
+                                                        "image_url": resto.photos[0],
+                                                        "subtitle": cardsScore.up + '/' + (cardsScore.up + cardsScore.down) + ' ' + cardsScore.percent + '%',
+                                                        "buttons": [{
+                                                            "type":"web_url",
+                                                            "url":resto.url,
+                                                            "title":"Visite website"
+                                                        }]
+                                                    });
+                                    });
+                                }
+                                callback(200, {
+                                    "messages": [
+                                        {
+                                            "attachment":{
+                                                "type":"template",
+                                                "payload":{
+                                                    "template_type":"generic",
+                                                    "elements": elements
+                                                }
                                             }
                                         }
-                                    }
-                                ]
-                            });
+                                    ]
+                                });
+                            }
                         });
                     }
                     else
