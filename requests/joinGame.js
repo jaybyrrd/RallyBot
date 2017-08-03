@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:22:14 2017 Gaëtan Léandre
-// Last update Thu Aug  3 00:47:21 2017 Gaëtan Léandre
+// Last update Thu Aug  3 00:55:12 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -18,7 +18,6 @@ exports.joinGame = function(facebookId, gameId, callback)
     if (facebookId != undefined && gameId != undefined)
     {
         console.log(gameId);
-        return;
         game.find({'_id': ObjectId(gameId)}, function(err, games)
         {
             if (games.length > 0)
