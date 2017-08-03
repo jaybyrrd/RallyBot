@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 16:54:47 2017 Gaëtan Léandre
+// Last update Wed Aug  2 20:14:54 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -49,8 +49,8 @@ exports.getResult = function(facebookId, gameId, callback)
                                                 up++;
                                         }
                                         cardsScore.push({
-                                            'name': cardGame[i].card.name,
-                                            'yelpId': cardGame[i].card.yelpId,
+                                            'name': cardGames[i].card.name,
+                                            'yelpId': cardGames[i].card.yelpId,
                                             'up': up,
                                             'down': down,
                                             'percent': (up / (up + down) * 100.0)
