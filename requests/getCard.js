@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Thu Aug  3 01:43:23 2017 Gaëtan Léandre
+// Last update Thu Aug  3 01:48:44 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -38,60 +38,67 @@ exports.getCard = function(facebookId, gameId, callback)
                                     cardGame.find({'card' :{ $in : games[0].cards}, 'card' : {$nin : done}, 'game' : games[0]._id}).populate('card').exec(function(err, cards) {
                                         if (cards.length > 0)
                                         {
-                                            yelpManager.getInfoYelp(cards[0].card.yelpId).then(function(resto)
+                                            function yelpCall(pos)
                                             {
-                                                var elements = [];
-                                                var i = 0;
-                                                var buttons = [];
-                                                buttons.push({
-                                                    "type": "show_block",
-                                                    "block_name": "acceptCard",
-                                                    "title": "Love it!"
-                                                });
-                                                buttons.push({
-                                                    "type":"show_block",
-                                                    "block_name":"refuseCard",
-                                                    "title":"Please NO!"
-                                                });
-                                                if (resto.url)
+                                                if (cards[pos])
                                                 {
-                                                    buttons.push({
-                                                        "type":"web_url",
-                                                        "url":resto.url,
-                                                        "title":"Visite website"
+                                                    yelpManager.getInfoYelp(cards[pos].card.yelpId).then(function(resto)
+                                                    {
+                                                        var elements = [];
+                                                        var i = 0;
+                                                        var buttons = [];
+                                                        buttons.push({
+                                                            "type": "show_block",
+                                                            "block_name": "acceptCard",
+                                                            "title": "Love it!"
+                                                        });
+                                                        buttons.push({
+                                                            "type":"show_block",
+                                                            "block_name":"refuseCard",
+                                                            "title":"Please NO!"
+                                                        });
+                                                        if (resto.url)
+                                                        {
+                                                            buttons.push({
+                                                                "type":"web_url",
+                                                                "url":resto.url,
+                                                                "title":"Visite website"
+                                                            });
+                                                        }
+                                                        while (resto.photos && i < resto.photos.length)
+                                                        {
+                                                            elements.push({
+                                                                            "title": resto.name,
+                                                                            "image_url": resto.photos[i],
+                                                                            "subtitle": 'Price : ' + resto.price + ' / Rating : ' + resto.rating + '/5',
+                                                                            "buttons":buttons
+                                                                        });
+                                                            i++;
+                                                        }
+                                                        callback(200, {
+                                                            "messages": [
+                                                                {
+                                                                    "attachment":{
+                                                                        "type":"template",
+                                                                        "payload":{
+                                                                            "template_type":"generic",
+                                                                            "elements": elements
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            set_attributes: {
+                                                                cb_yelpId: resto.id
+                                                            }
+                                                        });
+                                                    }).fail(function() {
+                                                        yelpCall(pos + 1);
                                                     });
                                                 }
-                                                while (resto.photos && i < resto.photos.length)
-                                                {
-                                                    elements.push({
-                                                                    "title": resto.name,
-                                                                    "image_url": resto.photos[i],
-                                                                    "subtitle": 'Price : ' + resto.price + ' / Rating : ' + resto.rating + '/5',
-                                                                    "buttons":buttons
-                                                                });
-                                                    i++;
+                                                else {
+                                                    callback(200, {set_attributes: {cb_yelpId: '-1'}});
                                                 }
-                                                callback(200, {
-                                                    "messages": [
-                                                        {
-                                                            "attachment":{
-                                                                "type":"template",
-                                                                "payload":{
-                                                                    "template_type":"generic",
-                                                                    "elements": elements
-                                                                }
-                                                            }
-                                                        }
-                                                    ],
-                                                    set_attributes: {
-                                                        cb_yelpId: resto.id
-                                                    }
-                                                });
-                                            }).fail(function() {
-                                                console.log("nooop");
-                                                console.log(cards[0].card.yelpId);
-                                                callback(200, {set_attributes: {cb_yelpId: '-1'}});
-                                            });
+                                            }
                                         }
                                         else
                                         {
