@@ -15,7 +15,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.joinGame = function(facebookId, gameId, callback)
 {
-    if (facebookId != undefined && gameId != undefined)
+    if (facebookId != undefined && facebookId.length && gameId != undefined && gameId.length)
     {
         game.find({'_id': ObjectId(gameId)}, function(err, games)
         {
