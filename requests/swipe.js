@@ -5,14 +5,16 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 08:14:52 2017 Gaëtan Léandre
-// Last update Wed Aug  2 05:15:02 2017 Gaëtan Léandre
+// Last update Thu Aug  3 03:43:23 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
 var card = require('../schemas/card.js');
+var game = require('../schemas/game.js');
 var vote = require('../schemas/vote.js');
+var ObjectId = require('mongoose').Types.ObjectId;
 
-exports.swipe = function(facebookId, yelpId, swipe, callback)
+exports.swipe = function(facebookId, yelpId, gameId, swipe, callback)
 {
     if (facebookId != undefined)
     {
@@ -20,20 +22,28 @@ exports.swipe = function(facebookId, yelpId, swipe, callback)
         {
             if (peoples.length > 0)
             {
-                card.find({'yelpId': yelpId}, function(err, cards)
+                game.find({'_id': ObjectId(gameId)}, function(err, games)
                 {
-                    if (cards.length > 0)
+                    if (games.length > 0)
                     {
-                        vote.findOneAndUpdate({'user': peoples[0]._id, 'card': cards[0]._id}, {$set:{'choice':swipe, 'user': peoples[0]._id, 'card': cards[0]._id}}, {upsert: true, new: true}, function(err, cards){
-                            if(!err)
-                                callback(200, { 'response': 'Ok', 'id': facebookId, 'res': true});
+                        card.find({'yelpId': yelpId}, function(err, cards)
+                        {
+                            if (cards.length > 0)
+                            {
+                                vote.findOneAndUpdate({'user': peoples[0]._id, 'card': cards[0]._id, 'game': games[0]._id}, {$set:{'choice':swipe, 'user': peoples[0]._id, 'card': cards[0]._id}}, {upsert: true, new: true}, function(err, votes){
+                                    if(!err)
+                                        callback(200, { 'response': 'Ok', 'id': facebookId, 'res': true});
+                                    else
+                                        callback(500, { 'response': 'Internal error', 'res': false});
+                                });
+                            }
                             else
-                                callback(500, { 'response': 'Internal error', 'res': false});
+                                callback(404, {'response':"Card not found",'res':false});
+                            return;
                         });
                     }
                     else
-                        callback(404, {'response':"Card not found",'res':false});
-                    return;
+                        callback(404, {'response':"Game not found",'res':false});
                 });
             }
             else

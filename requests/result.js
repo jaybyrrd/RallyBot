@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Thu Aug  3 02:08:47 2017 Gaëtan Léandre
+// Last update Thu Aug  3 04:12:18 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -36,7 +36,7 @@ exports.getResult = function(facebookId, gameId, callback)
                             var counter = 0;
                             var elements = [];
                             function findCards(cardNum){
-                                vote.find({'card': cardGames[cardNum].card}, function(err, votes){
+                                vote.find({'card': cardGames[cardNum].card, 'game': ObjectId(gameId)}, function(err, votes){
                                     if (votes)
                                     {
                                         var up = 0;
@@ -67,27 +67,6 @@ exports.getResult = function(facebookId, gameId, callback)
                             for (var i = 0; i < cardGames.length;i++)
                             {
                                 findCards(i);
-                                // vote.find({'card': cardGames[i].card}, function(err, votes){
-                                //     if (votes)
-                                //     {
-                                //         var up = 0;
-                                //         var down = 0;
-                                //         for (var j = 0; j < votes.length ; j++)
-                                //         {
-                                //             if (votes[j].choice == 0)
-                                //                 down++;
-                                //             else if (votes[j].choice == 1)
-                                //                 up++;
-                                //         }
-                                //         cardsScore.push({
-                                //             'name': cardGames[i].card.name,
-                                //             'yelpId': cardGames[i].card.yelpId,
-                                //             'up': up,
-                                //             'down': down,
-                                //             'percent': (up / (up + down) * 100.0)
-                                //         });
-                                //     }
-                                // });
                             }
                             function finish(){
                                 counter = 0;
@@ -101,7 +80,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements[cardNumber] = {
                                                         "title": resto.name,
                                                         "image_url": resto.photos[0],
-                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends want to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":resto.url,
@@ -117,7 +96,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements[cardNumber] = {
                                                         "title": cardsScore[cardNumber].name,
                                                         "image_url": '',
-                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends whant to go to this place.',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent.toFixed(2) + '% of your friends want to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":'https://www.yelp.fr/biz/' + cardsScore[cardNumber].yelpId,
