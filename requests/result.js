@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:18:28 2017 Gaëtan Léandre
+// Last update Wed Aug  2 21:33:00 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -16,7 +16,9 @@ var yelpManager = require('../managers/yelpManager.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 function compareNombres(a, b) {
-  return b.percent - a.percent;
+    if (b.percent == a.percent)
+        return ((b.up + b.down) - (a.up + a.down));
+    return b.percent - a.percent;
 }
 
 exports.getResult = function(facebookId, gameId, callback)
@@ -102,7 +104,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                         elements.push({
                                                         "title": resto.name,
                                                         "image_url": resto.photos[0],
-                                                        "subtitle": cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent + '%',
+                                                        "subtitle": 'votes : ' + cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent + '% of your friends whant to go to this place.',
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":resto.url,
