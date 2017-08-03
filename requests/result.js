@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Wed Aug  2 05:53:57 2017 Gaëtan Léandre
-// Last update Wed Aug  2 21:13:27 2017 Gaëtan Léandre
+// Last update Wed Aug  2 21:16:58 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -95,28 +95,31 @@ exports.getResult = function(facebookId, gameId, callback)
                                 var elements = [];
                                 for (var j = 0; j < 5 && j < cardsScore.length;j++)
                                 {
-                                    yelpManager.getInfoYelp(cardsScore[j].yelpId).then(function(resto)
+                                    function addElement(cardNumber)
                                     {
-                                        console.log("PUSH");
-                                        elements.push({
-                                                        "title": resto.name,
-                                                        "image_url": resto.photos[0],
-                                                        "subtitle": cardsScore.up + '/' + (cardsScore.up + cardsScore.down) + ' ' + cardsScore.percent + '%',
-                                                        "buttons": [{
-                                                            "type":"web_url",
-                                                            "url":resto.url,
-                                                            "title":"Visite website"
-                                                        }]
-                                                    });
-                                        console.log(elements);
-                                        counter++;
-                                        if (counter >= 5 || counter >= cardsScore.length)
-                                            sendAnser(elements);
-                                    }).fail(function(){
-                                        counter++;
-                                        if (counter >= 5 || counter >= cardsScore.length)
-                                            sendAnser(elements);
-                                    });
+                                        yelpManager.getInfoYelp(cardsScore[cardNumber].yelpId).then(function(resto)
+                                        {
+                                            console.log(cardsScore[cardNumber]);
+                                            elements.push({
+                                                            "title": resto.name,
+                                                            "image_url": resto.photos[0],
+                                                            "subtitle": cardsScore[cardNumber].up + '/' + (cardsScore[cardNumber].up + cardsScore[cardNumber].down) + ' ' + cardsScore[cardNumber].percent + '%',
+                                                            "buttons": [{
+                                                                "type":"web_url",
+                                                                "url":resto.url,
+                                                                "title":"Visite website"
+                                                            }]
+                                                        });
+                                            console.log(elements);
+                                            counter++;
+                                            if (counter >= 5 || counter >= cardsScore.length)
+                                                sendAnser(elements);
+                                        }).fail(function(){
+                                            counter++;
+                                            if (counter >= 5 || counter >= cardsScore.length)
+                                                sendAnser(elements);
+                                        });
+                                    }
                                 }
                             }
                             function sendAnser(elements2) {
