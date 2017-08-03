@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:22:14 2017 Gaëtan Léandre
-// Last update Tue Aug  1 12:14:05 2017 Gaëtan Léandre
+// Last update Thu Aug  3 00:43:33 2017 Gaëtan Léandre
 //
 
 var user = require('../schemas/user.js');
@@ -15,6 +15,8 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.joinGame = function(facebookId, gameId, callback)
 {
+    callback(500, { 'response': 'Internal error', 'res': false});
+
     if (facebookId != undefined && gameId != undefined)
     {
         game.find({'_id': ObjectId(gameId)}, function(err, games)
