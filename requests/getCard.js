@@ -62,7 +62,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                                             buttons.push({
                                                                 "type":"web_url",
                                                                 "url":resto.url,
-                                                                "title":"Visite website"
+                                                                "title":"Visit website"
                                                             });
                                                         }
                                                         while (resto.photos && i < resto.photos.length)
@@ -108,7 +108,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                                         buttons.push({
                                                             "type":"web_url",
                                                             "url": 'https://www.yelp.fr/biz/' + cards[pos].yelpId,
-                                                            "title":"Visite website"
+                                                            "title":"Visit website"
                                                         });
                                                         elements.push({
                                                                         "title": cards[pos].name,
