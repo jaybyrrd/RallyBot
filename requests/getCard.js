@@ -5,7 +5,7 @@
 // Login   <gaetan.leandre@epitech.eu>
 //
 // Started on  Tue Aug  1 04:58:19 2017 Gaëtan Léandre
-// Last update Thu Aug  3 02:05:26 2017 Gaëtan Léandre
+// Last update Thu Aug  3 02:09:11 2017 Gaëtan Léandre
 //
 
 var game = require('../schemas/game.js');
@@ -112,7 +112,7 @@ exports.getCard = function(facebookId, gameId, callback)
                                                         });
                                                         elements.push({
                                                                         "title": cards[pos].name,
-                                                                        "image_url": '?',
+                                                                        "image_url": '',
                                                                         "subtitle": 'Price : ? / Rating : ?/5',
                                                                         "buttons":buttons
                                                                     });
