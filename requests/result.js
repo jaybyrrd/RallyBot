@@ -86,7 +86,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":resto.url,
-                                                            "title":"Visite website"
+                                                            "title":"Visit website"
                                                         }]
                                                     };
                                         counter++;
@@ -102,7 +102,7 @@ exports.getResult = function(facebookId, gameId, callback)
                                                         "buttons": [{
                                                             "type":"web_url",
                                                             "url":'https://www.yelp.fr/biz/' + cardsScore[cardNumber].yelpId,
-                                                            "title":"Visite website"
+                                                            "title":"Visit website"
                                                         }]
                                                     };
                                         counter++;

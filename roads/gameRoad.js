@@ -7,12 +7,12 @@
 // Started on  Tue Aug  1 04:33:28 2017 Gaëtan Léandre
 // Last update Thu Aug  3 03:57:09 2017 Gaëtan Léandre
 //
-
+;
 var joinGame = require('../requests/joinGame.js');
 var addGame = require('../requests/addGame.js');
 var getCard = require('../requests/getCard.js');
 var getGames = require('../requests/getGames.js');
-var swipe = require('../requests/swipe.js');
+var swipe = require('../requests/swipe.js')
 var getResult = require('../requests/result.js');
 
 module.exports = function(app) {
